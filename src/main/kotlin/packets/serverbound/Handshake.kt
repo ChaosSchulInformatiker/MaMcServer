@@ -1,11 +1,13 @@
-package packets
+package packets.serverbound
 
 import Socket
 import io.ktor.utils.io.core.*
+import packets.ServerBoundPacket
 import readString
 import readVarInt
+import readVarIntEnum
 
-class Handshake(socket: Socket) : Packet(socket) {
+class Handshake(socket: Socket) : ServerBoundPacket(socket) {
     override val id = 0x00
 
     /*var protocolVersion
@@ -13,11 +15,11 @@ class Handshake(socket: Socket) : Packet(socket) {
     var serverPort
     var nextState*/
 
-    override fun accept(input: ByteReadPacket) {
+    override suspend fun accept(input: ByteReadPacket) {
         println(input.readVarInt())
         println(input.readString())
         println(input.readUShort())
-        println(input.readVarInt())
+        println(input.readVarIntEnum<NextState>())
 
         switchMode(Mode.Login)
     }

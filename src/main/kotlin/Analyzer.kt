@@ -1,4 +1,4 @@
-import io.ktor.utils.io.*
+/*import io.ktor.utils.io.*
 import java.nio.ByteBuffer
 
 var mode = ModeO.WAIT
@@ -58,4 +58,4 @@ enum class ModeO {
     WAIT, CONNECT
 }
 
-typealias Future = suspend (ByteWriteChannel) -> Unit
+typealias Future = suspend (ByteWriteChannel) -> Unit*/

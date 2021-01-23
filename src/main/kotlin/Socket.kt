@@ -1,12 +1,15 @@
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
-import packets.Handshake
-import packets.LoginStart
+import packets.ClientBoundPacket
+import packets.clientbound.Disconnect_Login
+import packets.clientbound.LoginSuccess
+import packets.serverbound.Handshake
+import packets.serverbound.LoginStart
 
-class Socket {
+class Socket(private val input: ByteReadChannel, private val output: ByteWriteChannel) {
     var mode = Mode.Handshaking
 
-    fun applyPacket(id: Int, reader: ByteReadPacket, writer: ByteWriteChannel) {
+    suspend fun applyPacket(id: Int, reader: ByteReadPacket) {
         val packet = when (mode) {
             Mode.Handshaking -> when (id) {
                 0x00 -> Handshake(this)
@@ -19,7 +22,21 @@ class Socket {
             }
         }
         packet.accept(reader)
-        packet.respond(writer)
+    }
+
+    fun packet(id: Int): ClientBoundPacket = when (mode) {
+        Mode.Handshaking -> TODO()
+        Mode.Status -> TODO()
+        Mode.Login -> when (id) {
+            0x00 -> Disconnect_Login(this)
+            0x02 -> LoginSuccess(this)
+            else -> TODO()
+        }
+    }
+
+    suspend fun sendPacket(packet: ClientBoundPacket) {
+        packet.send(output)
+        output.flush()
     }
 }
 
