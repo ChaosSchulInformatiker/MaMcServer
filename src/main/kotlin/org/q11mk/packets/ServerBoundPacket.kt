@@ -4,7 +4,7 @@ import org.q11mk.Socket
 import io.ktor.utils.io.core.*
 
 abstract class ServerBoundPacket(socket: Socket) : Packet(socket) {
-    abstract suspend fun accept(input: ByteReadPacket)
+    abstract fun accept(input: ByteReadPacket)
 }
 
 /*class Layout {

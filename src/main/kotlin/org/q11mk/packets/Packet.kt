@@ -14,4 +14,6 @@ abstract class Packet (private val socket: Socket) {
     suspend fun ClientBoundPacket.respond() {
         socket.sendPacket(this)
     }
+
+    open suspend fun future() {}
 }

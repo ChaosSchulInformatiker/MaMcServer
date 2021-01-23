@@ -12,7 +12,7 @@ class LoginSuccess(socket: Socket) : ClientBoundPacket(socket) {
     override val id = 0x02
     lateinit var name: String
 
-    override suspend fun send(output: BytePacketBuilder) {
+    override fun send(output: BytePacketBuilder) {
         output.writeUUID(UUID.randomUUID())
         output.writeString(name)
     }

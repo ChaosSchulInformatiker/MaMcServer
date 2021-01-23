@@ -1,6 +1,5 @@
 package org.q11mk
 
-import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import java.util.*
 
@@ -42,6 +41,24 @@ fun BytePacketBuilder.writeString(string: String) {
     writeByte(string.length.toByte())
     for (c in string) {
         writeByte(c.toByte())
+    }
+}
+
+fun BytePacketBuilder.writeVarInt(varInt: VarInt) {
+    var value = varInt.int
+    do {
+        var temp = (value and 127).toByte()
+        value = value ushr 7
+        if (value != 0) {
+            temp = (temp.toInt() or 128).toByte()
+        }
+        writeByte(temp)
+    } while (value != 0)
+}
+
+fun BytePacketBuilder.writeByteArray(array: ByteArray) {
+    for (b in array) {
+        writeByte(b)
     }
 }
 

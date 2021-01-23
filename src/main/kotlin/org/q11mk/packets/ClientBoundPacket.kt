@@ -5,5 +5,5 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 
 abstract class ClientBoundPacket(socket: Socket) : Packet(socket) {
-    abstract suspend fun send(output: BytePacketBuilder)
+    abstract fun send(output: BytePacketBuilder)
 }

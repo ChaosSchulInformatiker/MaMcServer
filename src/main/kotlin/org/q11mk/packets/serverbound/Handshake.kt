@@ -12,13 +12,13 @@ class Handshake(socket: Socket) : ServerBoundPacket(socket) {
     var serverPort
     var nextState*/
 
-    override suspend fun accept(input: ByteReadPacket) {
+    override fun accept(input: ByteReadPacket) {
         println(input.readVarInt())
         println(input.readString())
         println(input.readUShort())
         println(input.readVarIntEnum<NextState>())
 
-        switchMode(org.q11mk.Mode.Login)
+        switchMode(Mode.Login)
     }
 }
 

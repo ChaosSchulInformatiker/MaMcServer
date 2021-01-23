@@ -4,6 +4,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import org.q11mk.packets.ClientBoundPacket
 import org.q11mk.packets.clientbound.Disconnect_Login
+import org.q11mk.packets.clientbound.EncryptionRequest
 import org.q11mk.packets.clientbound.LoginSuccess
 import org.q11mk.packets.serverbound.Handshake
 import org.q11mk.packets.serverbound.LoginStart
@@ -25,6 +26,7 @@ class Socket(private val input: ByteReadChannel, private val output: ByteWriteCh
             Mode.Play -> TODO()
         }
         packet.accept(reader)
+        packet.future()
     }
 
     fun packet(id: Int): ClientBoundPacket = when (mode) {
@@ -32,6 +34,7 @@ class Socket(private val input: ByteReadChannel, private val output: ByteWriteCh
         Mode.Status -> TODO()
         Mode.Login -> when (id) {
             0x00 -> Disconnect_Login(this)
+            0x01 -> EncryptionRequest(this)
             0x02 -> LoginSuccess(this)
             else -> TODO()
         }
@@ -46,6 +49,7 @@ class Socket(private val input: ByteReadChannel, private val output: ByteWriteCh
             writePacket(builder.build())
         }.build())
         output.flush()
+        packet.future()
     }
 }
 
