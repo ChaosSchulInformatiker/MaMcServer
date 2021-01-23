@@ -1,7 +1,7 @@
-package packets
+package org.q11mk.packets
 
-import Mode
-import Socket
+import org.q11mk.Mode
+import org.q11mk.Socket
 
 abstract class Packet (private val socket: Socket) {
     abstract val id: Int

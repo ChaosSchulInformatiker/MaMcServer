@@ -1,8 +1,8 @@
-package packets.clientbound
+package org.q11mk.packets.clientbound
 
-import Socket
+import org.q11mk.Socket
 import io.ktor.utils.io.*
-import packets.ClientBoundPacket
+import org.q11mk.packets.ClientBoundPacket
 
 class Disconnect_Login(socket: Socket) : ClientBoundPacket(socket) {
     override val id = 0x00

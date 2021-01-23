@@ -1,11 +1,8 @@
-package packets.serverbound
+package org.q11mk.packets.serverbound
 
-import Socket
 import io.ktor.utils.io.core.*
-import packets.ServerBoundPacket
-import readString
-import readVarInt
-import readVarIntEnum
+import org.q11mk.*
+import org.q11mk.packets.ServerBoundPacket
 
 class Handshake(socket: Socket) : ServerBoundPacket(socket) {
     override val id = 0x00
@@ -21,7 +18,7 @@ class Handshake(socket: Socket) : ServerBoundPacket(socket) {
         println(input.readUShort())
         println(input.readVarIntEnum<NextState>())
 
-        switchMode(Mode.Login)
+        switchMode(org.q11mk.Mode.Login)
     }
 }
 

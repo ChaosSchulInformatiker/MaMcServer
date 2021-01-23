@@ -1,14 +1,11 @@
-package packets.serverbound
+package org.q11mk.packets.serverbound
 
-import Socket
+import org.q11mk.Socket
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
-import packets.ServerBoundPacket
-import packets.clientbound.Disconnect_Login
-import packets.clientbound.LoginSuccess
-import readString
-import writeString
-import writeUUID
+import org.q11mk.packets.ServerBoundPacket
+import org.q11mk.packets.clientbound.LoginSuccess
+import org.q11mk.readString
 import java.util.*
 
 class LoginStart(socket: Socket) : ServerBoundPacket(socket) {

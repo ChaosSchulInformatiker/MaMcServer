@@ -1,10 +1,10 @@
-package packets.clientbound
+package org.q11mk.packets.clientbound
 
-import Socket
+import org.q11mk.Socket
 import io.ktor.utils.io.*
-import packets.ClientBoundPacket
-import writeString
-import writeUUID
+import org.q11mk.packets.ClientBoundPacket
+import org.q11mk.writeString
+import org.q11mk.writeUUID
 import java.util.*
 
 class LoginSuccess(socket: Socket) : ClientBoundPacket(socket) {

@@ -1,10 +1,12 @@
+package org.q11mk
+
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
-import packets.ClientBoundPacket
-import packets.clientbound.Disconnect_Login
-import packets.clientbound.LoginSuccess
-import packets.serverbound.Handshake
-import packets.serverbound.LoginStart
+import org.q11mk.packets.ClientBoundPacket
+import org.q11mk.packets.clientbound.Disconnect_Login
+import org.q11mk.packets.clientbound.LoginSuccess
+import org.q11mk.packets.serverbound.Handshake
+import org.q11mk.packets.serverbound.LoginStart
 
 class Socket(private val input: ByteReadChannel, private val output: ByteWriteChannel) {
     var mode = Mode.Handshaking

@@ -1,6 +1,6 @@
-package packets
+package org.q11mk.packets
 
-import Socket
+import org.q11mk.Socket
 import io.ktor.utils.io.*
 
 abstract class ClientBoundPacket(socket: Socket) : Packet(socket) {

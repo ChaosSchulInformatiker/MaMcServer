@@ -1,3 +1,5 @@
+package org.q11mk
+
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
 import java.util.*
@@ -12,7 +14,7 @@ fun ByteReadPacket.readVarInt(): VarInt {
         result = (result or (value shl (7 * numRead)))
         numRead++
         if (numRead > 5) {
-            throw RuntimeException("VarInt is too big")
+            throw RuntimeException("org.q11mk.VarInt is too big")
         }
     } while ((read.toInt() and 0b10000000) != 0)
 

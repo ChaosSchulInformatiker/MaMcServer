@@ -1,4 +1,4 @@
-/*import io.ktor.utils.io.*
+package org.q11mk/*import io.ktor.utils.io.*
 import java.nio.ByteBuffer
 
 var mode = ModeO.WAIT

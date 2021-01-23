@@ -1,6 +1,7 @@
+package org.q11mk
+
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
-import io.ktor.network.sockets.Socket
 import io.ktor.utils.io.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ fun main() = runBlocking {
         val socket = server.accept()
 
         launch {
-            println("Socket accepted: ${socket.remoteAddress}")
+            println("org.q11mk.Socket accepted: ${socket.remoteAddress}")
 
             val input = socket.openReadChannel()
             val output = socket.openWriteChannel(autoFlush = false)

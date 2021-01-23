@@ -10,7 +10,7 @@ public class MCProtocol {
 
             numRead++;
             if (numRead > 5) {
-                throw new RuntimeException("VarInt is too big");
+                throw new RuntimeException("org.q11mk.VarInt is too big");
             }
         } while ((read & 0b10000000) != 0);
 
