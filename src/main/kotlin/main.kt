@@ -15,51 +15,24 @@ fun main() = runBlocking {
 
         launch {
             println("Socket accepted: ${socket.remoteAddress}")
+            val connectionSocket = Socket()
 
             val input = socket.openReadChannel()
-            val output = socket.openWriteChannel(autoFlush = true)
-
-            /*var await = true
-            var size = 0.toByte()
-            var message = Flexible.make<ByteBuffer>()*/
+            val output = socket.openWriteChannel(autoFlush = false)
 
             try {
                 while (true) {
-                    /*val currentByte = input.readByte()
-                    //println("${socket.remoteAddress}: $currentByte")
-
-                    if (await) {
-                        size = currentByte
-                        await = false
-                        message = ByteBuffer.allocate(size.toInt())
-                    } else {
-                        input.read(size.toInt()) {
-
-                        }
-                    }
-                    if (size <= 0.toByte()) {
-                        await = true
-                        analyze(message.array())(output)
-                    }*/
-
                     val size = input.readByte().toInt()
 
-                    /*input.readAvailable(size) {
-                        println("START ${it.remaining()}")
-                        repeat(it.remaining()) { _ ->
-                            print(String.format("0x%02X", it.get().toUByte().toInt()))
-                            print(" ")
-                        }
-                        println()
-                        println("END")
-                    }*/
                     input.readPacket(size).run {
-                        println("ID: ${readByte()}")
+                        val id = readByte().toInt()
+                        println("ID: $id")
+                        connectionSocket.applyPacket(id, this, output)
                     }
                 }
             } catch (e: Throwable) {
                 e.printStackTrace()
-                mode = Mode.WAIT
+                mode = ModeO.WAIT
                 socket.close()
             }
         }

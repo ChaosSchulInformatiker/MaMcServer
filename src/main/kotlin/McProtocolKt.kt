@@ -1,3 +1,6 @@
+import io.ktor.utils.io.core.*
+import packets.VarInt
+
 fun ByteArray.getVarInt(index: Int): IndexedResult<Int> {
     var numRead = 0
     var result = 0
@@ -41,4 +44,29 @@ fun ByteArray.printData() {
     }
     buf.append(']')
     println(buf.toString())
+}
+
+fun ByteReadPacket.readVarInt(): VarInt {
+    var numRead = 0
+    var result = 0
+    var read: Byte
+    do {
+        read = readByte()
+        val value: Int = (read.toInt() and 0b01111111)
+        result = (result or (value shl (7 * numRead)))
+        numRead++
+        if (numRead > 5) {
+            throw RuntimeException("VarInt is too big")
+        }
+    } while ((read.toInt() and 0b10000000) != 0)
+
+    return VarInt(result)
+}
+
+fun ByteReadPacket.readString(): String {
+    val buf = StringBuffer()
+    repeat(readByte().toInt()) {
+        buf.append(readByte().toChar())
+    }
+    return buf.toString()
 }

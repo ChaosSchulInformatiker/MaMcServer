@@ -1,19 +1,18 @@
 import io.ktor.utils.io.*
 import java.nio.ByteBuffer
-import java.util.*
 
-var mode = Mode.WAIT
+var mode = ModeO.WAIT
 
 fun analyze(data: ByteArray): Future {
     print(" >>> ")
     data.printData()
     return when (mode) {
-        Mode.WAIT ->
+        ModeO.WAIT ->
             when (data[0]) {
                 0.toByte() -> analyzeHandshake(data)
                 else -> TODO()
             }
-        Mode.CONNECT ->
+        ModeO.CONNECT ->
             when (data[0]) {
                 0.toByte() -> analyzeLoginStart(data)
                 else -> TODO()
@@ -29,7 +28,7 @@ fun analyzeHandshake(data: ByteArray): Future {
 
     println("Protocol Version: $protocolVersion Server Address: $serverAddress Port: $port Status: $status")
 
-    mode = Mode.CONNECT
+    mode = ModeO.CONNECT
     println("Enter mode CONNECT")
 
     return {}
@@ -55,7 +54,7 @@ fun analyzeLoginStart(data: ByteArray): Future {
     }
 }
 
-enum class Mode {
+enum class ModeO {
     WAIT, CONNECT
 }
 
