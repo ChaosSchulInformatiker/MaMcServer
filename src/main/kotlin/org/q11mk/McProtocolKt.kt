@@ -33,13 +33,13 @@ inline fun <reified E : Enum<E>> ByteReadPacket.readVarIntEnum(): Enum<E> {
     return E::class.java.enumConstants[readVarInt().int - 1]
 }
 
-suspend fun ByteWriteChannel.writeUUID(uuid: UUID) {
+fun BytePacketBuilder.writeUUID(uuid: UUID) {
     writeLong(uuid.leastSignificantBits)
     writeLong(uuid.mostSignificantBits)
 }
 
-suspend fun ByteWriteChannel.writeString(string: String) {
-    writeByte(string.length)
+fun BytePacketBuilder.writeString(string: String) {
+    writeByte(string.length.toByte())
     for (c in string) {
         writeByte(c.toByte())
     }

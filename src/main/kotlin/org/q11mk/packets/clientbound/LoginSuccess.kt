@@ -2,6 +2,7 @@ package org.q11mk.packets.clientbound
 
 import org.q11mk.Socket
 import io.ktor.utils.io.*
+import io.ktor.utils.io.core.*
 import org.q11mk.packets.ClientBoundPacket
 import org.q11mk.writeString
 import org.q11mk.writeUUID
@@ -11,10 +12,7 @@ class LoginSuccess(socket: Socket) : ClientBoundPacket(socket) {
     override val id = 0x02
     lateinit var name: String
 
-    override suspend fun send(output: ByteWriteChannel) {
-        output.writeByte(1 + 16 + 1 + name.length)
-        output.writeByte(id)
-
+    override suspend fun send(output: BytePacketBuilder) {
         output.writeUUID(UUID.randomUUID())
         output.writeString(name)
     }

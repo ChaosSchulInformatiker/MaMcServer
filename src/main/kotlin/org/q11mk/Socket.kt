@@ -22,6 +22,7 @@ class Socket(private val input: ByteReadChannel, private val output: ByteWriteCh
                 0x00 -> LoginStart(this)
                 else -> TODO()
             }
+            Mode.Play -> TODO()
         }
         packet.accept(reader)
     }
@@ -34,14 +35,20 @@ class Socket(private val input: ByteReadChannel, private val output: ByteWriteCh
             0x02 -> LoginSuccess(this)
             else -> TODO()
         }
+        Mode.Play -> TODO()
     }
 
     suspend fun sendPacket(packet: ClientBoundPacket) {
-        packet.send(output)
+        val builder = BytePacketBuilder().also { packet.send(it) }
+        output.writePacket(BytePacketBuilder().apply {
+            writeByte((builder.size + 1).toByte())
+            writeByte(packet.id.toByte())
+            writePacket(builder.build())
+        }.build())
         output.flush()
     }
 }
 
 enum class Mode {
-    Handshaking, Status, Login
+    Handshaking, Status, Login, Play
 }
