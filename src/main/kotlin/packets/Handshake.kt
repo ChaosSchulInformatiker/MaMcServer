@@ -1,0 +1,4 @@
+package packets
+
+class Handshake {
+}
